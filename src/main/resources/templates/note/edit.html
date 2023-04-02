@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Edit note by ID ' + ${id}"></title>
+</head>
+<body>
+<header ></header>
+<form class="pure-form" method="POST" action="http://localhost:8080/note/edit">
+    <fieldset>
+        <legend th:text="'Edit note by ID ' + ${id}"></legend>
+        <input type="hidden" name="id" th:value="${id}" />
+        <input type="title" name="title" placeholder="Title" th:value="${title}" />
+        <input type="content" name="content" placeholder="Content" th:value="${content}"/>
+        <button type="submit" class="pure-button pure-button-primary">Edit</button>
+    </fieldset>
+</form>
+</body>
+</html>
