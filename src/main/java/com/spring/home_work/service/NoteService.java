@@ -17,7 +17,7 @@ public class NoteService {
     public Note add(Note note) {
         long id;
         if (notes != null) {
-            id = notes.get(notes.size()-1).getId() + 1;
+            id = notes.get(notes.size() - 1).getId() + 1;
         } else {
             notes = new ArrayList<>();
             id = 1;
@@ -34,8 +34,18 @@ public class NoteService {
     public void update(Note note) {
         for (int i = 0; i < notes.size(); i++) {
             if (note.getId() == notes.get(i).getId()) {
-                notes.set(i, note);
-                return;
+                if (!note.getTitle().equals("") && !note.getContent().equals("")) {
+                    notes.set(i, note);
+                    return;
+                } else if (!note.getContent().equals("")) {
+                    notes.get(i).setContent(note.getContent());
+                    return;
+                } else if (!note.getTitle().equals("")) {
+                    notes.get(i).setTitle(note.getTitle());
+                    return;
+                } else {
+                    return;
+                }
             }
         }
         throw new IllegalArgumentException("Note with ID " + note.getId() + " doesn't exist");
