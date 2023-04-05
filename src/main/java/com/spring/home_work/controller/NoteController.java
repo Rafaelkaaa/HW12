@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Scanner;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,7 +44,6 @@ public class NoteController {
         result.addObject("id", id);
         result.addObject("title", title);
         result.addObject("content", content);
-
         Note note = new Note();
         note.setId(id);
         note.setTitle(title);
@@ -53,19 +51,4 @@ public class NoteController {
         noteService.update(note);
         return new RedirectView("/note/list");
     }
-
-    @PostMapping("filling")
-    public RedirectView filling() {
-        Note note1 = new Note();
-        note1.setTitle("1T");
-        note1.setContent("1C");
-        noteService.add(note1);
-        Note note2 = new Note();
-        note2.setTitle("2T");
-        note2.setContent("2C");
-        noteService.add(note2);
-        return new RedirectView("/note/list");
-    }
-
-
 }

@@ -1,62 +1,38 @@
 package com.spring.home_work.service;
 
 import com.spring.home_work.entity.Note;
+import com.spring.home_work.repository.NoteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class NoteService {
-    List<Note> notes;
+    @Autowired
+    NoteRepository repository;
 
     public List<Note> listAll() {
-        return notes;
+        return repository.listAll();
     }
 
     public Note add(Note note) {
-        long id;
-        if (notes != null) {
-            id = notes.get(notes.size() - 1).getId() + 1;
-        } else {
-            notes = new ArrayList<>();
-            id = 1;
-        }
-        note.setId(id);
-        notes.add(note);
+        repository.save(note);
         return note;
     }
 
     public void deleteById(long id) {
-        notes.remove(getById(id));
+        repository.deleteById(id);
     }
 
     public void update(Note note) {
-        for (int i = 0; i < notes.size(); i++) {
-            if (note.getId() == notes.get(i).getId()) {
-                if (!note.getTitle().equals("") && !note.getContent().equals("")) {
-                    notes.set(i, note);
-                    return;
-                } else if (!note.getContent().equals("")) {
-                    notes.get(i).setContent(note.getContent());
-                    return;
-                } else if (!note.getTitle().equals("")) {
-                    notes.get(i).setTitle(note.getTitle());
-                    return;
-                } else {
-                    return;
-                }
-            }
-        }
-        throw new IllegalArgumentException("Note with ID " + note.getId() + " doesn't exist");
+        repository.updateNoteById(note.getId(),
+                note.getTitle(),
+                note.getContent());
     }
 
     public Note getById(long id) {
-        for (Note note : notes) {
-            if (note.getId() == id) {
-                return note;
-            }
-        }
-        throw new IllegalArgumentException("Note with ID " + id + " doesn't exist");
+        return repository.getNoteById(id);
     }
 }
